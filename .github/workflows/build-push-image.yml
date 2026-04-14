@@ -1,5 +1,4 @@
-name: Build and Push
-
+name: Build and Push Image
 on: [push]
 
 permissions:
@@ -7,21 +6,18 @@ permissions:
   packages: write
 
 jobs:
-  build-push-image:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Check out repository code
         uses: actions/checkout@v4
 
       - name: Build image
-        run: docker build -t imageku .
+        run: docker build -t ghcr.io/cacapretty/build-image-github .
 
-      - name: Login to GHCR
+      - name: Login to GitHub Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u cacapretty --password-stdin
 
-      - name: Tag image
-        run: docker tag imageku ghcr.io/cacapretty/imageku:latest
-
-      - name: Push image
-        run: docker push ghcr.io/cacapretty/imageku:latest
+      - name: Push Image
+        run: docker push ghcr.io/cacapretty/build-image-github
