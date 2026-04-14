@@ -17,8 +17,12 @@ jobs:
       - name: Cek isi image
         run: docker history imageku:latest
 
+          permissions:
+  contents: read
+  packages: write
+
       - name: Login to GitHub Registry
-        run: echo ${{ secrets.TOKEN_GITHUB }} | docker login ghcr.io -u cacapretty --password-stdin
+  run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Tag image
         run: docker tag imageku ghcr.io/cacapretty/imageku:latest
