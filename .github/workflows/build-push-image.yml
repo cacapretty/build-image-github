@@ -18,7 +18,7 @@ jobs:
         run: docker build -t imageku .
 
           - name: Cek isi image
-        run: docker history imageku:latest
+        run: docker build -t imageku .
 
       - name: Login to GHCR
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u cacapretty --password-stdin
